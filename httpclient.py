@@ -49,15 +49,23 @@ class HTTPClient(object):
         results: ParseResult = urlparse(url)
         host = results.hostname
         path = results.path
-
+        query = results.query
+        
         if path == "":
             path = "/"
+        
+        # If the query is given in the url, not args
+        if query:
+            path += "?" + query 
 
         if (results.port == None):
             port = 443 if results.scheme == "https" else 80
         else:
             port = results.port
 
+        print(host)
+        print(port)
+        print(path)
         return host, port, path
 
     '''
@@ -193,7 +201,7 @@ class HTTPClient(object):
 if __name__ == "__main__":
     client = HTTPClient()
     command = "GET"
-    
+
     if (len(sys.argv) <= 1):
         help()
         sys.exit(1)
