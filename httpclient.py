@@ -132,8 +132,14 @@ class HTTPClient(object):
         body = ""
         host, port, path = self.get_host_port(url)
         self.connect(host, port)
+        
+        # As mentioned in the Discussion board, args will be used for the query. You can also just put the query in the initial url and path will have that
+        if args:
+            path += "?"
+            for key, value in args.items():
+                path += f"{key}={value}&"
 
-        request = f"GET {path} HTTP/1.1\r\nHost: {host}\r\nConnection: Close\r\n\r\n"
+        request = f"GET {path} HTTP/1.1\r\nHost: {host}\r\nConnection: close\r\n\r\n"
         self.sendall(request)
 
         data = self.recvall(self.socket)
@@ -156,7 +162,7 @@ class HTTPClient(object):
         self.connect(host, port)
 
         temp = ""
-        request = f"POST {path} HTTP/1.1\r\nHost: {host}\r\nAccept: */*\r\nConnection: Closed\r\nContent-Type: application/x-www-form-urlencoded\r\n"
+        request = f"POST {path} HTTP/1.1\r\nHost: {host}\r\nConnection: close\r\nContent-Type: application/x-www-form-urlencoded\r\n"
 
         if args:
             for key, value in args.items():
@@ -187,7 +193,7 @@ class HTTPClient(object):
 if __name__ == "__main__":
     client = HTTPClient()
     command = "GET"
-
+    
     if (len(sys.argv) <= 1):
         help()
         sys.exit(1)
