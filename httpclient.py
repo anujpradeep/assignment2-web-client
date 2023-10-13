@@ -55,7 +55,7 @@ class HTTPClient(object):
             path = "/"
 
         # If the query is given in the url, not args
-        if query:
+        if query != "":
             path += "?" + query
 
         if (results.port == None):
