@@ -50,13 +50,13 @@ class HTTPClient(object):
         host = results.hostname
         path = results.path
         query = results.query
-        
+
         if path == "":
             path = "/"
-        
+
         # If the query is given in the url, not args
         if query:
-            path += "?" + query 
+            path += "?" + query
 
         if (results.port == None):
             port = 443 if results.scheme == "https" else 80
@@ -140,7 +140,7 @@ class HTTPClient(object):
         body = ""
         host, port, path = self.get_host_port(url)
         self.connect(host, port)
-        
+
         # As mentioned in the Discussion board, args will be used for the query. You can also just put the query in the initial url and path will have that
         if args:
             path += "?"
